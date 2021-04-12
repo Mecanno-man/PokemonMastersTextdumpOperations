@@ -1,0 +1,11 @@
+.classpath
+.project
+.settings/
+bin/
+changeLog.txt
+characterPokémonCenterQuotes/
+dumpGerman.txt
+moveMap.txt
+newDump.txt
+oldDump.txt
+passiveSkillMap.txt
