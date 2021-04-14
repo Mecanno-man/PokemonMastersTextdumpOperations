@@ -92,16 +92,16 @@ public class DescriptionMapper {
             map.put(numberMapString[0]
                             .trim()
                             .replace("[", "")
-                            //no line breaks, and trim trailing whitespace
-                            .replaceAll(" ?\r\n", " ")
-                            //For previous line breaks on hyphens
-                            .replaceAll("- ", "-"),
+                            //For line breaks on hyphens
+                            .replaceAll("- ?\\r\\n", "-")
+                            //no line breaks, including trailing whitespace
+                            .replaceAll(" ?\r\n", " "),
                     numberMapString[1]
                             .trim()
+                            //For line breaks on hyphens
+                            .replaceAll("- ?\\r\\n", "-")
                             //no line breaks, and trim trailing whitespace
-                            .replaceAll(" ?\r\n", " ")
-                            //For previous line breaks on hyphens
-                            .replaceAll("- ", "-"));
+                            .replaceAll(" ?\r\n", " "));
         }
         return map;
     }
