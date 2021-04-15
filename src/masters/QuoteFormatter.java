@@ -182,7 +182,7 @@ public class QuoteFormatter {
                     f = false;
                 }
             }
-            writer.write("|" + time + "}}\r\n");
+            writer.write("|" + time + "}}\r\n\r\n");
         }
     }
 }
