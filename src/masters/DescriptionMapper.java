@@ -93,15 +93,15 @@ public class DescriptionMapper {
                             .trim()
                             .replace("[", "")
                             //For line breaks on hyphens
-                            .replaceAll("- ?\\r\\n", "-")
+                            .replaceAll("- ?\\r?\\n", "-")
                             //no line breaks, including trailing whitespace
-                            .replaceAll(" ?\r\n", " "),
+                            .replaceAll(" ?\\r?\\n", " "),
                     numberMapString[1]
                             .trim()
                             //For line breaks on hyphens
-                            .replaceAll("- ?\\r\\n", "-")
+                            .replaceAll("- ?\\r?\\n", "-")
                             //no line breaks, and trim trailing whitespace
-                            .replaceAll(" ?\r\n", " "));
+                            .replaceAll(" ?\\r?\\n", " "));
         }
         return map;
     }
