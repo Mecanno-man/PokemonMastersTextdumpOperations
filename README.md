@@ -4,8 +4,10 @@ This project contains a varity of operations dealing with Pokémon Masters EX te
 * a textdump of German language files only. (`dumpGerman.txt`)
 * a changelog for German language files. (`changeLog.txt`)
 * a PokéWiki dictionary from German move names to their German description. (`moveMap.txt`)
-* a PokéWiki dictionary from German passive skill names to their German description. (`passiveSkillMap.txt`)
+* a basic layout for the page "Liste der Fähigkeiten in Pokémon Masters EX". (`passiveSkillsList.txt`)
+* the text files relating to passive skill names seperate from the main dump. (`passiveSkills.txt`)
 * a folder containing the German Pokémon Center quotes of all characters in the format used on PokéWiki, though only configured properly for sync pairs.(`/characterPokémonCenterQuotes`)
+* a folder containing the German PokéLounge quotes of all characters in the format used on PokéWiki (`characterLoungeQuotes`)
 
 ## Usage
 
