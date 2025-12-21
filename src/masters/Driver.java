@@ -3,7 +3,9 @@ package masters;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**Driver class.
  *
@@ -43,9 +45,14 @@ public class Driver {
         Map<String, String> currentGermanDump = locSplit
                 .split("de", currentDump);
         Map<String, String> oldGermanDump = locSplit.split("de", oldDump);
+        
 
         /*Output German-only dump*/
         output(currentGermanDump, "dumpGerman");
+        
+        output(currentGermanDump.entrySet().stream()
+        		.filter(e -> e.getKey().contains("passive_skill_name"))
+        		.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new)), "passiveSkills");
 
         /*Create Log of changed/new Files*/
         DiffChecker diffChecker = new DiffChecker();
@@ -59,11 +66,14 @@ public class Driver {
                 new PrintWriter("moveMap.txt"),
                 currentGermanDump.get("\r\nmove_description_parts_de.lsd\r\n"));
 
-        /*Create passive skill dictionary*/
+        /*Create passive skill list*/
         dm.map(currentGermanDump.get("\r\npassive_skill_name_de.lsd\r\n"),
                 currentGermanDump
                 .get("\r\npassive_skill_description_de.lsd\r\n"),
-                new PrintWriter("passiveSkillMap.txt"));
+                new PrintWriter("passiveSkillList.txt"),
+                currentGermanDump
+                .get("\r\npassive_skill_description_parts_de.lsd\r\n"),
+                currentGermanDump.get("\r\npassive_skill_name_parts_de.lsd\r\n"));
 
         /*create Pokémon Center quote list*/
         QuoteFormatter qf = new QuoteFormatter();
