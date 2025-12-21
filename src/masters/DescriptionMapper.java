@@ -4,8 +4,6 @@ import java.io.PrintWriter;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 /**Creates a map of a name to a corresponding description.
  *
@@ -15,7 +13,6 @@ import java.util.stream.Stream;
 public class DescriptionMapper {
 
     /**Constructor for cases, where the descriptions does contain variables.
-     *
      * Only works with move descriptions
      *
      * @param nameString - the name file as string
@@ -34,7 +31,7 @@ public class DescriptionMapper {
 
         /*Replace part variables with contents of said variables*/
         String[] descriptionStringArray = descriptionString
-                .split("(\\[Name:MoveDescriptionPartsIdTag Idx=\"|\" \\])");
+                .split("(\\[Name:MoveDescriptionPartsIdTag Idx=\"|\" ])");
         String correctDescriptionString = "";
         for (int i = 0; i < descriptionStringArray.length - 1; i += 2) {
             correctDescriptionString = correctDescriptionString
@@ -50,7 +47,6 @@ public class DescriptionMapper {
     }
 
     /**Constructor for cases where the names and descriptions contain variables.
-    *
     * Only works with passive skill descriptions
     *
     * @param nameString - the name file as string
@@ -73,7 +69,7 @@ public class DescriptionMapper {
                nameParts.trim().split("\r\n\\["));
 
        String[] nameStringArray = nameString
-               .split("(\\[Name:PassiveSkillNameParts Idx=\"|\" \\])");
+               .split("(\\[Name:PassiveSkillNameParts Idx=\"|\" ])");
        String correctNameString = "";
        for (int i = 0; i < nameStringArray.length - 1; i += 2) {
            correctNameString = correctNameString
@@ -89,7 +85,7 @@ public class DescriptionMapper {
        /*Replace part variables with contents of said variables*/
        String[] descriptionStringArray = descriptionString
                .split("(\\[Name:PassiveSkillDescriptionPartsIdTag Idx=\"|\" "
-                       + "\\])");
+                       + "])");
        String correctDescriptionString = "";
 
        for (int i = 0; i < descriptionStringArray.length - 1; i += 2) {
@@ -137,7 +133,7 @@ public class DescriptionMapper {
         
         List<Map.Entry<String, String>> sorted =
         		nameMap.entrySet().stream()
-        	       .sorted(Map.Entry.comparingByValue()).collect(Collectors.toList());
+        	       .sorted(Map.Entry.comparingByValue()).toList();
 
         
         for (Map.Entry<String, String> entry : sorted) {
@@ -161,9 +157,9 @@ public class DescriptionMapper {
      * @return Map of IDs mapped to contents
      */
     private Map<String, String> createMap(final String[] input) {
-        Map<String, String> map = new TreeMap<String, String>();
+        Map<String, String> map = new TreeMap<>();
         for (String s : input) {
-            String[] numberMapString = s.split("\\]");
+            String[] numberMapString = s.split("]");
             if (numberMapString.length > 1) {
                 for (int i = 2; i < numberMapString.length; i++) {
                     numberMapString[1] = numberMapString[1]

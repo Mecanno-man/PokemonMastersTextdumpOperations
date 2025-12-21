@@ -25,7 +25,7 @@ public class Unpacker {
             throws FileNotFoundException {
         Scanner sc = new Scanner(f);
         sc.useDelimiter("===========");
-        Map<String, String> map = new TreeMap<String, String>();
+        Map<String, String> map = new TreeMap<>();
         while (sc.hasNext()) {
             map.put(sc.next(), sc.next());
         }

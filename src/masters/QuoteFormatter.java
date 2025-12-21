@@ -6,7 +6,6 @@ import java.util.Map;
 import java.util.TreeMap;
 
 /**Create a file for each character of the quotes they say in the Pkmn Center.
- *
  * Note that only sync pairs are formatted correctly,
  * trainer classes and April Fools characters are not supported.
  *
@@ -17,12 +16,9 @@ import java.util.TreeMap;
 public class QuoteFormatter {
 
     /**Create a file for each character of quotes they say in the Pkmn Center.
-     *
      * Note that only sync pairs are formatted correctly,
      * trainer classes and April Fools characters are not supported.
-     *
      * Output descriptors are hardcoded to German.
-     *
      * Outputed filenames are romanized Japanese.
      *
      * @param dump - a full text dump as a Map.
@@ -180,22 +176,22 @@ public class QuoteFormatter {
 
     private Map<String, String> createTextBoxMap(final Map<String, String> dump,
                                                  final String key) {
-        Map<String, String> map = new TreeMap<String, String>();
+        Map<String, String> map = new TreeMap<>();
         String[] lines = dump.get(key).split("\\[ch");
         for (String s : lines) {
             s = s.trim();
             if (!s.isEmpty() && !s.contains("0000_00_red_aprilfool")) {
-                map.put(s.split("_10\\]")[0].split("\\/")[1],
-                        s.split("_10\\] ")[1]
+                map.put(s.split("_10]")[0].split("/")[1],
+                        s.split("_10] ")[1]
                         .replaceAll("\n", " ")
                         .replaceAll("\r", "")
                         //player name
-                        .replaceAll("\\[Name:PlayerNickname \\]",
+                        .replaceAll("\\[Name:PlayerNickname ]",
                                 "<Name des Spielers>")
                         //355 is a typo in Hapu's quotes
-                        .replaceAll("\\[DE:Gen Ref\\=\"(2|3)55\" M=\"", "")
+                        .replaceAll("\\[DE:Gen Ref=\"([23])55\" M=\"", "")
                         .replaceAll("\" F=\"", "/") //gendered language
-                        .replaceAll("\" \\]", "")
+                        .replaceAll("\" ]", "")
                         .trim());
             }
         }

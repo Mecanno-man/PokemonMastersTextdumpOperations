@@ -16,18 +16,17 @@ public class Driver {
 
     /**Main method.
      *
-     * @param args - unused
      * @throws Exception
      */
-    public static void main(final String[] args) throws Exception {
+    public static void main(String[] args) throws Exception {
         Driver m = new Driver();
         m.run();
     }
 
     /**Map representation of files of new dump.*/
-    private Map<String, String> currentDump;
+    private final Map<String, String> currentDump;
     /**Map representation of files of old dump.*/
-    private Map<String, String> oldDump;
+    private final Map<String, String> oldDump;
 
     /**Starts the program.
      *
@@ -52,7 +51,7 @@ public class Driver {
         
         output(currentGermanDump.entrySet().stream()
         		.filter(e -> e.getKey().contains("passive_skill_name"))
-        		.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (x, y) -> y, LinkedHashMap::new)), "passiveSkills");
+        		.collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (_, y) -> y, LinkedHashMap::new)), "passiveSkills");
 
         /*Create Log of changed/new Files*/
         DiffChecker diffChecker = new DiffChecker();
@@ -83,7 +82,6 @@ public class Driver {
 
     /**
      * Outputs a given dump in the same format as the input.
-     *
      * Note that the dump is not sorted the same way as the old dump.
      *
      * @param dump - the dump to output

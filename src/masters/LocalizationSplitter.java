@@ -19,7 +19,7 @@ public class LocalizationSplitter {
      */
     public Map<String, String> split(final String lang,
                                      final Map<String, String> dump) {
-        Map<String, String> localizedDump = new TreeMap<String, String>();
+        Map<String, String> localizedDump = new TreeMap<>();
 
         for (String s : dump.keySet()) {
             if (s.contains("_" + lang + ".lsd")) {
