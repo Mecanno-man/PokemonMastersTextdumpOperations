@@ -123,17 +123,17 @@ public class QuoteFormatter {
                             + name + charaversion + ".txt");
 
                     extractQuote("8201_2001",
-                            "Begrüssung", map, lounge);
+                            "Begrüßung", map, lounge);
                     extractQuote("8201_2002",
-                            "Begrüssung ab Level 10", map, lounge);
+                            "Begrüßung ab Level 10", map, lounge);
                     extractQuote("8201_2003",
-                            "Begrüssung ab Level 30", map, lounge);
+                            "Begrüßung ab Level 30", map, lounge);
                     extractQuote("8201_2101",
-                            "Begrüssung mit Geschenk", map, lounge);
+                            "Begrüßung mit Geschenk", map, lounge);
                     extractQuote("8201_2102",
-                            "Begrüssung mit Geschenk ab Level 10", map, lounge);
+                            "Begrüßung mit Geschenk ab Level 10", map, lounge);
                     extractQuote("8201_2103",
-                            "Begrüssung mit Geschenk ab Level 30", map, lounge);
+                            "Begrüßung mit Geschenk ab Level 30", map, lounge);
                     extractQuote("8201_2201",
                             "Interagieren", map, lounge);
                     extractQuote("8201_2202",
@@ -224,6 +224,25 @@ public class QuoteFormatter {
                         writer.write(" ");
                     }
                     writer.write(map.get(codenumber + "_0" + j));
+                    f = false;
+                }
+            }
+            writer.write("|" + time + "}}\r\n\r\n");
+        } else if (map.containsKey(codenumber + "_100")) {
+            writer.write("{{Zitat|");
+            boolean f = true;
+            /* Not sure what happens if a quote has more than 10 text boxes,
+             * as the variance in the variable in the dump is a single digit.*/
+            final int max = 1000;
+            for (int j = 0; j < max; j = j + 100) {
+                if (map.containsKey(codenumber + "_" + j)) {
+                    /*First text box does not start with white space.
+                     *Will starts with 0, the rest with 1,
+                     *that's why the bool is necessary.*/
+                    if (!f) {
+                        writer.write(" ");
+                    }
+                    writer.write(map.get(codenumber + "_" + j));
                     f = false;
                 }
             }

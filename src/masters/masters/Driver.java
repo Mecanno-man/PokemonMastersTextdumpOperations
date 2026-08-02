@@ -1,8 +1,12 @@
 package masters;
 
+import tools.jackson.databind.ObjectMapper;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -28,6 +32,8 @@ public class Driver {
     /**Map representation of files of old dump.*/
     private final Map<String, String> oldDump;
 
+    private final Map<Integer, ParameterMapping> parameterMap = new HashMap<>();
+
     /**Starts the program.
      *
      * @throws FileNotFoundException
@@ -36,6 +42,9 @@ public class Driver {
         Unpacker u = new Unpacker();
         currentDump = u.unpack(new File("newDump.txt"));
         oldDump = u.unpack(new File("oldDump.txt"));
+        ObjectMapper objectMapper = new ObjectMapper();
+        ParameterMappings parameterMappings = objectMapper.readValue(new File("MoveAndPassiveSkillDigit.json"), ParameterMappings.class);
+        Arrays.stream(parameterMappings.getEntries()).forEach(e -> parameterMap.put(e.getId(), e));
     }
 
     private void run() throws FileNotFoundException {
@@ -57,22 +66,19 @@ public class Driver {
         DiffChecker diffChecker = new DiffChecker();
         diffChecker.run(currentGermanDump, oldGermanDump);
 
-        DescriptionMapper dm = new DescriptionMapper();
+        DescriptionMapper dm = new DescriptionMapper(parameterMap,
+                currentGermanDump.get("\r\nmove_name_de.lsd\r\n"), currentGermanDump.get("\r\npassive_skill_name_de.lsd\r\n"),
+                currentGermanDump.get("\r\npassive_skill_name_parts_de.lsd\r\n"), currentGermanDump.get("\r\ntag_name_with_prepositions_de.lsd\r\n"));
 
         /*Create move dictionary*/
-        dm.map(currentGermanDump.get("\r\nmove_name_de.lsd\r\n"),
-                currentGermanDump.get("\r\nmove_description_de.lsd\r\n"),
-                new PrintWriter("moveMap.txt"),
-                currentGermanDump.get("\r\nmove_description_parts_de.lsd\r\n"));
+        dm.mapMoves(currentGermanDump.get("\r\nmove_description_de.lsd\r\n"), currentGermanDump.get("\r\nmove_description_parts_de.lsd\r\n"));
 
         /*Create passive skill list*/
-        dm.map(currentGermanDump.get("\r\npassive_skill_name_de.lsd\r\n"),
-                currentGermanDump
+        dm.mapSkills(currentGermanDump
                 .get("\r\npassive_skill_description_de.lsd\r\n"),
                 new PrintWriter("passiveSkillList.txt"),
                 currentGermanDump
-                .get("\r\npassive_skill_description_parts_de.lsd\r\n"),
-                currentGermanDump.get("\r\npassive_skill_name_parts_de.lsd\r\n"));
+                .get("\r\npassive_skill_description_parts_de.lsd\r\n"));
 
         /*create Pokémon Center quote list*/
         QuoteFormatter qf = new QuoteFormatter();
