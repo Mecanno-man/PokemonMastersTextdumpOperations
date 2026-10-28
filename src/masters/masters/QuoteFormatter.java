@@ -2,7 +2,6 @@ package masters;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.stream.Collectors;
