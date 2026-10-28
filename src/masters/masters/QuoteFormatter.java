@@ -2,8 +2,10 @@ package masters;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
+import java.util.Comparator;
 import java.util.Map;
 import java.util.TreeMap;
+import java.util.stream.Collectors;
 
 /**Create a file for each character of the quotes they say in the Pkmn Center.
  * Note that only sync pairs are formatted correctly,
@@ -246,6 +248,12 @@ public class QuoteFormatter {
                     f = false;
                 }
             }
+            writer.write("|" + time + "}}\r\n\r\n");
+        } else {
+            writer.write("{{Zitat|");
+            writer.write(map.entrySet().stream().filter(x -> x.getKey().startsWith(codenumber))
+                    .sorted(Map.Entry.comparingByKey()).map(Map.Entry::getValue).collect(Collectors.joining(" ")));
+
             writer.write("|" + time + "}}\r\n\r\n");
         }
     }
